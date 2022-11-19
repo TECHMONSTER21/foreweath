@@ -12,7 +12,9 @@ class WeatherModel {
 
   Future<dynamic> getweatherlocation() async{
     Location location= Location();
-    await location.getCurrentlocation();
+    print('Location');
+     await location.getCurrentlocation();
+    print('getcurrentlocation');
     Networking networking=Networking('https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$api&units=metric');
      var rawData=networking.getdatafromurl();
       return rawData;
@@ -24,15 +26,15 @@ class WeatherModel {
     } else if (condition < 400) {
       return '🌧';
     } else if (condition < 600) {
-      return '☔️';
+      return '☔';
     } else if (condition < 700) {
-      return '☃️';
+      return '☃';
     } else if (condition < 800) {
       return '🌫';
     } else if (condition == 800) {
-      return '☀️';
+      return '☀';
     } else if (condition <= 804) {
-      return '☁️';
+      return '☁';
     } else {
       return '🤷‍';
     }
