@@ -1,5 +1,6 @@
 import 'package:foreweath/location.dart';
 import 'package:foreweath/services/networking.dart';
+import 'package:geolocator/geolocator.dart';
 const api='8550ad072f36c1c149e013201fa53b35';
 
 class WeatherModel {
@@ -12,7 +13,15 @@ class WeatherModel {
 
   Future<dynamic> getweatherlocation() async{
     Location location= Location();
-    print('Location');
+    // print('Location');
+    LocationPermission permissionstatus;
+    permissionstatus = await Geolocator.checkPermission();
+    if (permissionstatus == LocationPermission.denied) {
+      permissionstatus = await Geolocator.requestPermission();
+      if (permissionstatus == LocationPermission.deniedForever) {
+        return ('Location Not Available');
+      }
+    }
      await location.getCurrentlocation();
     print('getcurrentlocation');
     Networking networking=Networking('https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$api&units=metric');
